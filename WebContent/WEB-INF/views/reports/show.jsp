@@ -11,7 +11,13 @@
                     <tbody>
                         <tr>
                             <th>氏名</th>
-                            <td><c:out value="${report.employee.name}" /></td>
+                            <td>
+                                <p><c:out value="${report.employee.name}" /></p>
+                                <form method="POST" action="<c:url value='/follow' />">
+                                    <input type="hidden" name="_token" value="${_token}" />
+                                    <button type="submit">フォローする</button>
+                                </form>
+                            </td>
                         </tr>
                         <tr>
                             <th>日付</th>
