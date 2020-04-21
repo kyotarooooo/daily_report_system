@@ -12,11 +12,22 @@
                         <tr>
                             <th>氏名</th>
                             <td>
-                                <p><c:out value="${report.employee.name}" /></p>
-                                <form method="POST" action="<c:url value='/follow' />">
-                                    <input type="hidden" name="_token" value="${_token}" />
-                                    <button type="submit">フォローする</button>
-                                </form>
+                                <c:choose>
+                                    <c:when test="${report.employee.id == login_employee.id}">
+                                        <p>作成者とログインユーザーが同じ</p>
+                                    </c:when>
+                                    <c:when test="${follows_count == 1}">
+                                        <p><c:out value="${report.employee.name}" /></p>
+                                        <p>フォロー解除</p>
+                                    </c:when >
+                                    <c:otherwise>
+                                        <p><c:out value="${report.employee.name}" /></p>
+                                        <form method="POST" action="<c:url value='/follows/create' />">
+                                            <input type="hidden" name="_token" value="${_token}" />
+                                            <button type="submit">フォローする</button>
+                                        </form>
+                                    </c:otherwise>
+                                </c:choose>
                             </td>
                         </tr>
                         <tr>

@@ -9,9 +9,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Table(name = "follows")
+//フォローしているかしていないかチェック(フォローされている)　結果は1が返ってくる
+@NamedQueries({
+    @NamedQuery(
+            name = "followCheck",
+            query = "SELECT COUNT(f) FROM Follow AS f WHERE f.follow = :follow AND f.follower = :follower AND f.follow_flag = 1 ORDER BY f.id DESC"
+            )
+})
+
+
 @Entity
 public class Follow {
     @Id
@@ -21,12 +32,15 @@ public class Follow {
 
     @ManyToOne
     @JoinColumn(name = "follow_id", nullable = false)
-    private Employee employee;
+    private Employee follow;
 
-    @Column(name = "follower_id", nullable = false)
-    private Integer follower_id;
+    //joincolumnを使う理由
+    //主キー以外で検索する場合はつける
+    @ManyToOne
+    @JoinColumn(name = "follower_id", nullable = false)
+    private Employee follower;
 
-    @Column(name = "follow_flag", nullable = false)
+    @JoinColumn(name = "follow_flag", nullable = false)
     private Integer follow_flag;
 
     @Column(name = "created_at", nullable = false)
@@ -43,19 +57,19 @@ public class Follow {
         this.id = id;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public Employee getFollow() {
+        return follow;
     }
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setFollow(Employee follow) {
+        this.follow = follow;
     }
 
 
-    public Integer getFollower_id() {
-        return follower_id;
+    public Employee getFollower() {
+        return follower;
     }
-    public void setFollower_id(Integer follower_id) {
-        this.follower_id = follower_id;
+    public void setFollower(Employee follower) {
+        this.follower = follower;
     }
 
     public Integer getFollow_flag() {
