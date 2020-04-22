@@ -18,7 +18,10 @@
                                     </c:when>
                                     <c:when test="${follows_count == 1}">
                                         <p><c:out value="${report.employee.name}" /></p>
-                                        <p>フォロー解除</p>
+                                        <form method="POST" action="<c:url value='/follows/unfollow' />">
+                                            <input type="hidden" name="_token" value="${_token}" />
+                                            <button type="submit">フォロー解除</button>
+                                        </form>
                                     </c:when >
                                     <c:otherwise>
                                         <p><c:out value="${report.employee.name}" /></p>

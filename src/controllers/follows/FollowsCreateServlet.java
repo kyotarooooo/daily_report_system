@@ -38,20 +38,37 @@ public class FollowsCreateServlet extends HttpServlet {
         if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
-
+            //ここに"もし既にデータがあったらアップデートのみ実行"
+            //これでもSQL文が使える！
             Report r = em.find(Report.class, (Integer)(request.getSession().getAttribute("report_id")));
+            Employee login_employee = (Employee)request.getSession().getAttribute("login_employee");
+            Employee e = em.find(Employee.class, r.getEmployee().getId());
+            long check_count = (long)em.createNamedQuery("existenceCheck", Long.class).setParameter("follow", login_employee).setParameter("follower", e).getSingleResult();
 
-            Follow f = new Follow();
-            f.setFollow((Employee)request.getSession().getAttribute("login_employee"));
-            f.setFollower(r.getEmployee());
-            f.setFollow_flag(1);
-            f.setCreated_at(new Timestamp(System.currentTimeMillis()));
-            f.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+            //もし過去に1回でもフォローしていたらデータがDBにデータが存在していることになるため、アップデートをかける
+           if(check_count == 1) {
+               //ログインしているユーザーとこれからフォローするユーザーとの情報をとってくる
+               Follow f = (Follow)em.createNamedQuery("getFollowTable", Follow.class).setParameter("follow", login_employee).setParameter("follower", e).getSingleResult();
 
-            em.getTransaction().begin();
-            em.persist(f);
-            em.getTransaction().commit();
-            em.close();
+               f.setFollow((Employee)request.getSession().getAttribute("login_employee"));
+               f.setFollower(r.getEmployee());
+               f.setFollow_flag(1);
+               f.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+               em.getTransaction().begin();
+               em.getTransaction().commit();
+               em.close();
+           } else {
+               Follow f = new Follow();
+               f.setFollow((Employee)request.getSession().getAttribute("login_employee"));
+               f.setFollower(r.getEmployee());
+               f.setFollow_flag(1);
+               f.setCreated_at(new Timestamp(System.currentTimeMillis()));
+               f.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+               em.getTransaction().begin();
+               em.persist(f);
+               em.getTransaction().commit();
+               em.close();
+           }
             request.getSession().setAttribute("flush", "フォローしました。");
 
             request.getSession().removeAttribute("report_id");
