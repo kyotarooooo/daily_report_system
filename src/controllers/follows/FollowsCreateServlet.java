@@ -73,8 +73,7 @@ public class FollowsCreateServlet extends HttpServlet {
 
             request.getSession().removeAttribute("report_id");
 
-            //あとでreportのshowにリダイレクトされるように設定する
-            response.sendRedirect(request.getContextPath() + "/reports/index");
+            response.sendRedirect(request.getContextPath() + "/reports/show?id=" + r.getId());
         }
     }
 

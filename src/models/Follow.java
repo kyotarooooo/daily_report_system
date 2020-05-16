@@ -16,17 +16,24 @@ import javax.persistence.Table;
 @Table(name = "follows")
 //フォローしているかしていないかチェック(フォローされている)　結果は1が返ってくる
 @NamedQueries({
+    //フォローされていたら1を返す。されていなかったら0を返す(条件分岐に使っている)
     @NamedQuery(
             name = "followCheck",
             query = "SELECT COUNT(f) FROM Follow AS f WHERE f.follow = :follow AND f.follower = :follower AND f.follow_flag = 1 ORDER BY f.id DESC"
             ),
+    //フォローした履歴があるか。あれば新しくデータを作成しないのような感じで使っている。
     @NamedQuery(
             name = "existenceCheck",
             query = "SELECT COUNT(f) FROM Follow AS f WHERE f.follow = :follow AND f.follower = :follower ORDER BY f.id DESC"
             ),
     @NamedQuery(
             name = "getFollowTable",
-            query = "SELECT f FROM Follow AS f WHERE f.follow = :follow AND f.follower = :follower ORDER BY f.id DESC"
+            query = "SELECT f FROM Follow AS f WHERE f.follow = :follow AND f.follower = :follower"
+            ),
+    //ログインユーザーのフォロワーを取得
+    @NamedQuery(
+            name = "getFollowers",
+            query = "SELECT f FROM Follow AS f WHERE f.follow = :follow AND f.follow_flag = 1 ORDER BY f.id DESC"
             )
 })
 

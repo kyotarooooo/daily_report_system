@@ -58,7 +58,7 @@ public class FollowsUnfollowServlet extends HttpServlet {
             em.close();
             request.getSession().setAttribute("flush", "フォロー解除しました。");
 
-            response.sendRedirect(request.getContextPath() + "/reports/index");
+            response.sendRedirect(request.getContextPath() + "/reports/show?id=" + r.getId());
         }
     }
 

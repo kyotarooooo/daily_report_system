@@ -52,6 +52,14 @@ public class ReportsShowServlet extends HttpServlet {
         //条件分岐で追加
         request.setAttribute("follows_count", follows_count);
         request.setAttribute("login_employee", login_employee);
+        //フォローしたとフォロー解除のフラッシュメッセージを消す
+        //もしセッションスコープにフラッシュメッセージが登録されていたら...
+        if(request.getSession().getAttribute("flush") != null) {
+            //フラッシュメッセージをセッションスコープから取得
+            request.setAttribute("flush", request.getSession().getAttribute("flush"));
+            //そして削除
+            request.getSession().removeAttribute("flush");
+        }
 
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/show.jsp");

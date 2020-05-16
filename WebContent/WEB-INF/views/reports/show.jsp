@@ -3,6 +3,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
+        <c:if test="${flush != null}">
+            <div id="flush_success">
+                <c:out value="${flush}"></c:out>
+            </div>
+        </c:if>
         <c:choose>
             <c:when test="${report != null}">
                 <h2>日報　詳細ページ</h2>
@@ -14,7 +19,7 @@
                             <td>
                                 <c:choose>
                                     <c:when test="${report.employee.id == login_employee.id}">
-                                        <p>作成者とログインユーザーが同じ</p>
+                                        <p><c:out value="${report.employee.name}" /></p>
                                     </c:when>
                                     <c:when test="${follows_count == 1}">
                                         <p><c:out value="${report.employee.name}" /></p>
