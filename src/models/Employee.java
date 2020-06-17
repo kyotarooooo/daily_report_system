@@ -28,6 +28,15 @@ import javax.persistence.Table;
     @NamedQuery(
             name = "checkLoginCodeAndPassword",
             query = "SELECT e FROM Employee AS e WHERE e.delete_flag = 0 AND e.code = :code AND e.password = :pass"
+            ),
+    @NamedQuery(
+            name = "getFavoriteEmployee",
+            query = "SELECT e FROM Employee AS e WHERE e.id = :id ORDER BY e.id DESC"
+            ),
+  //お気に入りした従業員の総数
+    @NamedQuery(
+            name = "getFavoriteEmployeeCount",
+            query = "SELECT COUNT(e) FROM Employee AS e WHERE e.id IN :favorite_employee_list_count"
             )
 })
 @Entity

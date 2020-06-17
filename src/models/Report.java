@@ -40,6 +40,16 @@ import javax.persistence.Table;
     @NamedQuery(
             name = "getFollowerReportsCount",
             query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee IN :followerList"
+            ),
+    //ログインしているユーザーのお気に入りしている日報を取得
+    @NamedQuery(
+            name = "getFavoriteReports",
+            query = "SELECT r FROM Report AS r WHERE r.id = :id"
+            ),
+    //ログインしているユーザーのお気に入りしている日報の総件数を取得
+    @NamedQuery(
+            name = "getFavoriteReportsCount",
+            query = "SELECT COUNT(r) FROM Report AS r WHERE r.id IN :favorite_report_list_count"
             )
 })
 @Entity

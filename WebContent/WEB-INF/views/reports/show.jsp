@@ -12,6 +12,27 @@
             <c:when test="${report != null}">
                 <h2>日報　詳細ページ</h2>
 
+                <!-- 条件分岐を変える必要がある -->
+                <c:choose>
+                    <c:when test="${report.employee.id == login_employee.id}">
+                        <!-- 自分の日報だったらお気に入りは表示させない -->
+                    </c:when>
+                    <c:when test="${favorite_count == 1}">
+                        <form method="POST" action="<c:url value='/favorites/release' />">
+                            <input type="hidden" name="_token" value="${_token}" />
+                            <input class="black_favorite" type="submit" value="お気に入り中">
+                        </form>
+                    </c:when>
+                    <c:otherwise>
+                        <form method="POST" action="<c:url value='/favorites/create' />">
+                            <input type="hidden" name="_token" value="${_token}" />
+                            <input class="white_favorite" type="submit" value="お気に入り" />
+                        </form>
+                    </c:otherwise>
+                </c:choose>
+                <div class="total_favorite">
+                    <a href="<c:url value='/favorites/employee/index' />">お気に入り件数<c:out value="${favorite_employee_count}" />件</a>&nbsp;
+                </div>
                 <table>
                     <tbody>
                         <tr>
@@ -25,14 +46,14 @@
                                         <p><c:out value="${report.employee.name}" /></p>
                                         <form method="POST" action="<c:url value='/follows/unfollow' />">
                                             <input type="hidden" name="_token" value="${_token}" />
-                                            <button type="submit">フォロー解除</button>
+                                            <input class="follow_button" type="submit" value="フォロー中" />
                                         </form>
                                     </c:when >
                                     <c:otherwise>
                                         <p><c:out value="${report.employee.name}" /></p>
                                         <form method="POST" action="<c:url value='/follows/create' />">
                                             <input type="hidden" name="_token" value="${_token}" />
-                                            <button type="submit">フォローする</button>
+                                            <input class="follow_button2" type="submit" value="フォロー" />
                                         </form>
                                     </c:otherwise>
                                 </c:choose>

@@ -156,3 +156,71 @@ pre {
 h3 {
     font-size: larger;
 }
+
+
+/*フォローボタン*/
+.follow_button {
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    color: #FFF;
+    dorder-bottom: solid 4px #0000FF;
+    border-radius: 3px;
+    background-color: #00FFFF;
+}
+.follow_button:active {
+    -webkit-transform: translateY(4px);
+    transform: translateY(4px);
+    border_bottom: none;
+}
+
+.follow_button2 {
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    color: #000000;
+    dorder-bottom: solid 4px #555555;
+    border-radius: 3px;
+    background-color: #CCCCCC;
+}
+
+/*お気に入りボタン*/
+.follow_button2:active {
+    -webkit-transform: translateY(4px);
+    transform: translateY(4px);
+    border_bottom: none;
+}
+
+.white_favorite {
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    color: #000000;
+    dorder-bottom: solid 4px #555555;
+    border-radius: 3px;
+    background-color: #CCCCCC;
+}
+.white_favorite:active {
+    -webkit-transform: translateY(4px);
+    transform: translateY(4px);
+    border_bottom: none;
+}
+.black_favorite {
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    color: #FFF;
+    dorder-bottom: solid 4px #FF0461;
+    border-radius: 3px;
+    background-color: #FF69A3;
+}
+.black_favorite:active {
+    -webkit-transform: translateY(4px);
+    transform: translateY(4px);
+    border_bottom: none;
+}
+
+.total_favorite {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
